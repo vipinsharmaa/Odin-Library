@@ -60,17 +60,21 @@ body {
 }
 
 header {
-    padding: 0.8rem;
+    display: flex;
+    align-items: center;
     background-color: #f8f8f8;
 }
 
 header img {
-    width: 150px;
+    width: 140px;
+    margin-left: 0.6rem;
 }
 
 main {
     padding: 1rem;
-    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
 }
 
 main button {
@@ -101,6 +105,7 @@ main button {
     white-space: nowrap;
     will-change: box-shadow, transform;
     font-size: 18px;
+    margin-bottom: 1rem;
 }
 
 main button:focus {
@@ -137,6 +142,23 @@ fieldset {
 }
 
 fieldset input {}
+
+.tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    padding: 1rem;
+
+}
+
+.tiles div {
+    padding: 1rem;
+    background-color: #61777F;
+    color: #f8f8f8;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
 
 footer {
     text-align: center;
