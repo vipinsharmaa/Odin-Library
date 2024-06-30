@@ -1,5 +1,5 @@
 
-## My submission for the Library App  project in the Intermediate HTML and CSS on The Odin Project. 
+## My submission for the Library App  project in the Javascript Course on The Odin Project. 
 
 
 ### Solution Links
