@@ -31,6 +31,11 @@ svg {
     max-width: 100%;
 }
 
+a,
+a:visited {
+    color: inherit;
+    text-decoration: none;
+}
 
 input,
 button,
@@ -67,7 +72,7 @@ header {
 
 header img {
     width: 140px;
-    margin-left: 0.6rem;
+    margin-left: 1rem;
 }
 
 main {
@@ -145,7 +150,7 @@ fieldset input {}
 
 .tiles {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 10px;
     padding: 1rem;
 
@@ -160,6 +165,31 @@ fieldset input {}
     box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
 
+.tiles .book {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.book-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
 footer {
     text-align: center;
+}
+
+h3 {
+    font-size: 1.2rem;
+}
+
+button.read {
+    background-color: rgb(185, 164, 124);
+    color: #fff;
+    border-radius: 4px;
+    border-width: 0;
+    cursor: pointer;
+
 }
