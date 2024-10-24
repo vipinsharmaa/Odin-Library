@@ -1,75 +1,94 @@
-function Book(title, author, pages, read) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
+class Book {
+    constructor(title, author, pages, read) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+    }
 }
 
-const myLibrary = [];
+class Library {
+    constructor() {
+        this.myLibrary = [];
+        this.tiles = document.querySelector(".tiles");
+        this.addBookButton = document.querySelector('button#addBook');
+        this.dialog = document.querySelector("dialog");
+        this.form = document.querySelector("#bookForm");
 
-const addBook = document.querySelector('button#addBook');
-const dialog = document.querySelector("dialog");
-const form = document.querySelector("#bookForm");
-const tiles = document.querySelector(".tiles");
-
-// show addbook modal
-addBook.addEventListener("click", () => {
-    dialog.showModal();
-});
-
-// Add book to Library
-function addBookToLibrary() {
-    let title = document.querySelector("#title").value;
-    let author = document.querySelector("#author").value;
-    let pages = document.querySelector("#numOfPages").value;
-    let read = document.querySelector("#read").checked;
-
-    let newBook = new Book(title, author, pages, read);
-    myLibrary.push(newBook);
-
-}
-
-// Form Submission handler
-form.addEventListener("submit", function (e) {
-    e.preventDefault();
-    addBookToLibrary();
-    form.reset();
-    dialog.close();
-    displayBook();
-})
-
-
-// Display Books
-function displayBook() {
-    tiles.innerHTML = '';
-    for (let i = 0; i < myLibrary.length; i++) {
-        const book = document.createElement("div");
-        book.classList.add('book');
-        book.innerHTML = `
-        <div class="book" data-index=${i}>
-            <div class="book-info">
-                <h3>Title:</h3><span class="title">${myLibrary[i].title}</span>
-                <h3>Author:</h3> <span class="author">${myLibrary[i].author}</span>
-                <h3>Pages:</h3> <span class="pages">${myLibrary[i].pages}</span>
-                <h3>Status:</h3> <button class="read">${myLibrary[i].read ? "Read" : "Unread"}</button>
-            </div>
-            <button type="button" class="deleteBook">Delete</button>
-        </div>
-        `;
-
-        // toggle read status
-        book.querySelector(".read").addEventListener("click", () => {
-            myLibrary[i].read = !myLibrary[i].read;
-            displayBook();
-        });
-
-        // Delete Book
-        book.querySelector(".deleteBook").addEventListener("click", () => {
-            myLibrary.splice(i, 1);
-            displayBook();
-        });
-
-        tiles.appendChild(book);
+        // Initialize event listeners
+        this.addBookButton.addEventListener("click", () => this.showDialog());
+        this.form.addEventListener("submit", (e) => this.handleFormSubmit(e));
     }
 
+    // Show modal for adding a new book
+    showDialog() {
+        this.dialog.showModal();
+    }
+
+    // Handle form submission to add a new book
+    handleFormSubmit(e) {
+        e.preventDefault();
+
+        let title = document.querySelector("#title").value;
+        let author = document.querySelector("#author").value;
+        let pages = document.querySelector("#numOfPages").value;
+        let read = document.querySelector("#read").checked;
+
+        // Create a new book and add it to the library
+        const newBook = new Book(title, author, pages, read);
+        this.addBook(newBook);
+
+        this.form.reset();
+        this.dialog.close();
+    }
+
+    // Add a new book to the library
+    addBook(book) {
+        this.myLibrary.push(book);
+        this.displayBooks();
+    }
+
+    // Display all books in the library
+    displayBooks() {
+        this.tiles.innerHTML = '';  
+        this.myLibrary.forEach((book, i) => {
+            const bookElement = document.createElement("div");
+            bookElement.classList.add('book');
+            bookElement.innerHTML = `
+            <div class="book-info" data-index=${i}>
+                <h3>Title:</h3><span class="title">${book.title}</span>
+                <h3>Author:</h3><span class="author">${book.author}</span>
+                <h3>Pages:</h3><span class="pages">${book.pages}</span>
+                <h3>Status:</h3><button class="read">${book.read ? "Read" : "Unread"}</button>
+            </div>
+            <button type="button" class="deleteBook">Delete</button>
+            `;
+            this.tiles.appendChild(bookElement);
+
+            // Add event listeners for each book
+            this.addToggleReadListener(bookElement, i);
+            this.addDeleteBookListener(bookElement, i);
+        });
+    }
+
+    // Toggle the read status of a book
+    addToggleReadListener(bookElement, index) {
+        const readButton = bookElement.querySelector(".read");
+        readButton.addEventListener("click", () => {
+            this.myLibrary[index].read = !this.myLibrary[index].read;
+            this.displayBooks();  
+        });
+    }
+
+    // Delete a book from the library
+    addDeleteBookListener(bookElement, index) {
+        const deleteButton = bookElement.querySelector(".deleteBook");
+        deleteButton.addEventListener("click", () => {
+            this.myLibrary.splice(index, 1);  
+            this.displayBooks();  
+        });
+    }
 }
+
+// Initialize the Library object
+const myLibraryApp = new Library();
